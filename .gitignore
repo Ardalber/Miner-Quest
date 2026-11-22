@@ -1,0 +1,4 @@
+# Fichiers générés par Godot
+.godot/
+/android/
+*.tmp
