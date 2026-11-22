@@ -185,7 +185,9 @@ func _build_dpad() -> void:
 		b.position = cell * 92
 		b.size = Vector2(86, 86)
 		b.modulate = Color(1, 1, 1, 0.8)
-		b.button_down.connect(func(): game.touch_dir = d)
+		b.button_down.connect(func():
+			game.touch_dir = d
+			game.press_dir(d))
 		b.button_up.connect(func():
 			if game.touch_dir == d:
 				game.touch_dir = Vector2i.ZERO)

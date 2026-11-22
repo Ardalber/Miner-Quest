@@ -38,3 +38,10 @@ Pour jouer sur téléphone, il faut exporter le projet depuis Godot (Projet → 
 - `scripts/main.gd` : règles du jeu et sauvegarde.
 - `scripts/world.gd` : dessin de la grotte et du mineur.
 - `scripts/hud.gd` : interface, forge, menu, croix tactile.
+
+## Version Web (téléphone)
+
+Le jeu exporté pour le navigateur est dans `docs/` et publié avec GitHub Pages :
+https://ardalber.github.io/Miner-Quest/
+
+Pour la mettre à jour après une modification : dans Godot, Projet → Exporter → « Web » → Exporter le projet (vers `docs/index.html`), puis pousse sur GitHub.

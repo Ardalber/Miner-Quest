@@ -31,6 +31,7 @@ var move_t := 1.0
 var swing := 0.0
 var cooldown := 0.0
 var touch_dir := Vector2i.ZERO
+var queued_dir := Vector2i.ZERO
 var playing := false
 var dirty := false
 var save_timer := 0.0
@@ -142,6 +143,25 @@ func _unhandled_input(event: InputEvent) -> void:
 			try_descend()
 		KEY_F:
 			hud.open_forge()
+		KEY_UP, KEY_Z, KEY_W:
+			press_dir(Vector2i.UP)
+		KEY_DOWN, KEY_S:
+			press_dir(Vector2i.DOWN)
+		KEY_LEFT, KEY_Q, KEY_A:
+			press_dir(Vector2i.LEFT)
+		KEY_RIGHT, KEY_D:
+			press_dir(Vector2i.RIGHT)
+
+
+## Appui bref (touche ou bouton tactile) : agit tout de suite, même si
+## le doigt est relâché avant l'image suivante.
+func press_dir(d: Vector2i) -> void:
+	if not playing or hud.is_modal_open():
+		return
+	if cooldown <= 0.0:
+		_act(d)
+	else:
+		queued_dir = d
 
 
 func _key_dir() -> Vector2i:
@@ -165,7 +185,10 @@ func _process(delta: float) -> void:
 	swing = maxf(0.0, swing - delta * 5.0)
 	if playing and not hud.is_modal_open():
 		var d := _key_dir()
+		if d == Vector2i.ZERO:
+			d = queued_dir
 		if d != Vector2i.ZERO and cooldown <= 0.0:
+			queued_dir = Vector2i.ZERO
 			_act(d)
 	camera.position = player_pos()
 	save_timer += delta
